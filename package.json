@@ -11,7 +11,6 @@
     "dotenv": "^7.0.0",
     "express": "^4.16.4",
     "express-validator": "^5.3.1",
-    "global": "^4.3.2",
     "helmet": "^3.16.0",
     "mongoose": "^5.5.3",
     "passport": "^0.4.0",
