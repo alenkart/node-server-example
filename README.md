@@ -1,3 +1,7 @@
+## General
+
+Tested working node.js version 10.15.3 LTS. 
+
 ## Environment variables
 
 Please create a .env file with the following content:
@@ -7,6 +11,7 @@ Please create a .env file with the following content:
 
 #SYSTEM
 PORT=4040
+AUTH_SALT_ROUND=10
 
 #MONGO DB
 MONGO_DB_URL=mongodb://localhost:27017/example

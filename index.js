@@ -4,24 +4,18 @@
 const express = require('express');
 const router = express.Router();
 const helmet = require('helmet');
-const expressValidation = require('express-validator/check');
+const validator = require('express-validator/check');
 
 require('dotenv').config();
-
+require('./lib/models');
 const app = express();
 
 //configs
-app.use(express.json());
 app.use(helmet());
-
-//models
-require('./lib/utils/mongoose.util')();
-const db = {
-    user: require('./lib/models/user.model'),
-};
+app.use(express.json());
 
 //constrollers
-const controllersArgs = {router, expressValidation, db};
+const controllersArgs = { router, validator };
 app.use('/user', require('./lib/controllers/user.controller')(controllersArgs));
 
 app.listen(process.env.PORT, () => {
