@@ -6,6 +6,9 @@
   "author": "Alenkart Rodriguez",
   "license": "MIT",
   "private": false,
+  "scripts": {
+    "pm2": "pm2 start index.config.js"
+  },
   "dependencies": {
     "bcrypt": "^3.0.6",
     "dotenv": "^7.0.0",
