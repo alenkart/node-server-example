@@ -2,6 +2,11 @@
 
 Tested working node.js version 10.15.3 LTS. 
 
+## Requirements
+
+* [mongodb](https://www.mongodb.com)
+* [pm2](https://yarnpkg.com)
+
 ## Environment variables
 
 Please create a .env file with the following content:
