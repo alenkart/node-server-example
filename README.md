@@ -10,6 +10,7 @@ Please create a .env file with the following content:
 #This file should never be committed.
 
 #SYSTEM
+NODE_ENV=development
 PORT=4040
 AUTH_SALT_ROUND=10
 
