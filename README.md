@@ -1,6 +1,6 @@
 ## General
 
-Tested working node.js version 10.15.3 LTS. 
+Tested working node.js version 10.15.3 LTS and node 12.0.0 Current. 
 
 ## Requirements
 
