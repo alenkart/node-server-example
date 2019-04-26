@@ -1,31 +1,33 @@
 //index.js
 'use strict';
 
+require('dotenv').config();
+
 const express = require('express');
-const router = express.Router();
 const helmet = require('helmet');
+const morgan = require('morgan');
 const validator = require('express-validator/check');
 const logger = require('./lib/utils/winstom.util');
-const morgan = require('./lib/utils/morgan.util')
-
-require('dotenv').config();
-require('./lib/models');
+const passport = require('./lib/utils/passport.util');
 
 const app = express();
 
 //configs
 app.use(helmet());
-app.use(morgan('combined', logger.stream));
+app.use(morgan('combined', {
+    stream: logger.stream
+}));
 app.use(express.json());
+app.use(passport.initialize());
 
 
 //constrollers
 const controllersArgs = {
-    logger,
-    router,
-    validator
+    validator,
+    passport
 };
 app.use('/user', require('./lib/controllers/user.controller')(controllersArgs));
+app.use('/auth', require('./lib/controllers/auth.controller')(controllersArgs));
 
 app.listen(process.env.PORT, () => {
     logger.info(`Server is running at port: ${process.env.PORT}, environment: ${process.env.NODE_ENV}`);
