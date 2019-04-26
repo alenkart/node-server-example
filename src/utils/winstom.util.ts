@@ -1,17 +1,15 @@
-//wistom.util.js
-'use strict';
+// wistom.util.ts
 
-const {
-    transports,
-    createLogger,
-    format
-} = require('winston');
+import { transports, createLogger, format } from 'winston';
 
 const logger = createLogger({
     format: format.simple(),
     transports: [
         new transports.Console({
             level: 'info',
+        }),
+        new transports.Console({
+            level: 'error',
         }),
         new transports.File({
             level: 'error',
@@ -20,8 +18,10 @@ const logger = createLogger({
     ],
 });
 
-logger.stream = {
-    write: (message) => logger.info(message.trim())
-}
+export const stream = {
+    write: (message: String) => {
+        logger.info(message);
+    },
+};
 
-module.exports = logger;
+export default logger;

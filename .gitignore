@@ -85,3 +85,6 @@ typings/
 
 # Visual Studio Code
 .vscode
+
+# Typescript out dir
+dist/

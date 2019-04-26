@@ -22,8 +22,8 @@ AUTH_SALT_ROUND=10
 #MONGO DB
 MONGO_DB_URL=mongodb://localhost:27017/example
 
-#AUTH
-JWT_SECRET=example_secret_key
-JWT_ISSUER=api.example.com
-JWT_AUDIENCE=example.com
+#PASSPORT
+PASSPORT_JWT_SECRET=example_secret_key
+PASSPORT_JWT_ISSUER=api.example.com
+PASSPORT_JWT_AUDIENCE=example.com
 ```
