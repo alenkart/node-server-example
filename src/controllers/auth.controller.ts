@@ -3,8 +3,7 @@
 import * as jwt from 'jsonwebtoken';
 import { Router, Request, Response } from 'express';
 import { body, validationResult } from 'express-validator/check';
-
-import models from '../models';
+import { User } from '../models';
 
 const router = Router();
 
@@ -16,7 +15,7 @@ router.post('/',
     async (req: Request, res: Response) => {
 
         try {
-
+            
             const errors = validationResult(req);
 
             if (!errors.isEmpty()) {
@@ -30,7 +29,7 @@ router.post('/',
                 password
             } = req.body;
 
-            const user = await models.User.findOne({
+            const user = await User.findOne({
                 email
             });
 

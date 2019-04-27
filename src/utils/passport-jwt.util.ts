@@ -1,6 +1,6 @@
 // passport-jwt.ulti
 
-import User from '../models/user.model';
+import { User } from '../models/user.model';
 import { Strategy, ExtractJwt } from 'passport-jwt';
 
 const optsJwt = {

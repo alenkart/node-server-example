@@ -8,8 +8,7 @@ import './utils/dotenv.util';
 import './utils/mongoose.util';
 import logger from './utils/winstom.util';
 import morgan from './utils/morgan.util';
-import userController from './controllers/user.controller';
-import authController from './controllers/auth.controller';
+import { userController, authController } from './controllers';
 
 const app = express();
 

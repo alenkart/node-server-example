@@ -3,7 +3,7 @@
 import { Router, Request, Response } from 'express';
 import { body, validationResult, param } from 'express-validator/check';
 
-import models from '../models';
+import { User } from '../models';
 import logger from '../utils/winstom.util';
 import passport from '../utils/passport.util';
 
@@ -12,7 +12,7 @@ const router = Router();
 router.get('/',
     async (req, res) => {
         try {
-            const users = await models.User.find();
+            const users = await User.find();
             res.json(users);
         } catch (error) {
             logger.error(error);
@@ -28,7 +28,7 @@ router.get('/:id',
     }),
     [param('id').not().isEmpty()],
     async (req: Request, res: Response) => {
-        const users = await models.User.findById(req.params.id);
+        const users = await User.findById(req.params.id);
         res.json(users);
     });
 
@@ -50,7 +50,7 @@ router.post('/',
                 });
             }
 
-            const userModel = new models.User({
+            const userModel = new User({
                 username: req.body.username,
                 password: req.body.password,
                 email: req.body.email
@@ -83,7 +83,7 @@ router.put('/:id',
                 });
             }
 
-            const result = await models.User.findByIdAndUpdate(req.params.id, {
+            const result = await User.findByIdAndUpdate(req.params.id, {
                 username: req.body.username,
                 active: req.body.active,
             });
@@ -113,7 +113,7 @@ router.delete('/:id',
                 });
             }
 
-            const result = await models.User.deleteOne({
+            const result = await User.deleteOne({
                 _id: req.params.id
             });
 
