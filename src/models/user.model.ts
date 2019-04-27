@@ -1,8 +1,7 @@
 // user.model
 
 import bcrypt from 'bcrypt';
-import { Schema, Document, Model } from 'mongoose';
-import mongoose from '../utils/mongoose.util';
+import mongoose, { Schema, Document } from 'mongoose';
 
 export interface IUser extends Document {
     username: string;
@@ -58,4 +57,4 @@ UserSchema.methods.comparePassword = function (candidatePassword: string) {
     return bcrypt.compare(candidatePassword, this.password);
 }
 
-export const User = mongoose.model<IUser>('User', UserSchema);
+export default mongoose.model<IUser>('User', UserSchema);

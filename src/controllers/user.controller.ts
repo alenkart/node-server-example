@@ -6,11 +6,12 @@ import { body, validationResult, param } from 'express-validator/check';
 import { User } from '../models';
 import logger from '../utils/winstom.util';
 import passport from '../utils/passport.util';
+import { validateRequest } from '../utils/validator.util';
 
 const router = Router();
 
 router.get('/',
-    async (req, res) => {
+    async (req: Request, res: Response) => {
         try {
             const users = await User.find();
             res.json(users);
@@ -23,65 +24,23 @@ router.get('/',
     });
 
 router.get('/:id',
-    passport.authenticate('jwt', {
-        session: false
-    }),
-    [param('id').not().isEmpty()],
+    [
+        param('id').not().isEmpty()
+    ],
+    validateRequest,
+    passport.authenticate('jwt', { session: false }),
     async (req: Request, res: Response) => {
+
         const users = await User.findById(req.params.id);
         res.json(users);
     });
 
-router.post('/',
-    [
-        body('username').not().isEmpty(),
-        body('password').not().isEmpty(),
-        body('email').isEmail(),
-    ],
-    async (req: Request, res: Response) => {
-
-        try {
-
-            const errors = validationResult(req);
-
-            if (!errors.isEmpty()) {
-                return res.status(400).json({
-                    errors: errors.array()
-                });
-            }
-
-            const userModel = new User({
-                username: req.body.username,
-                password: req.body.password,
-                email: req.body.email
-            });
-
-            const user = await userModel.save();
-
-            res.json(user);
-
-        } catch (error) {
-            logger.error(error);
-            res.status(500).json({
-                error
-            });
-        }
-
-    });
-
 router.put('/:id',
     [param('id').not().isEmpty()],
+    validateRequest,
     async (req: Request, res: Response) => {
 
         try {
-
-            const errors = validationResult(req);
-
-            if (!errors.isEmpty()) {
-                return res.status(400).json({
-                    errors: errors.array()
-                });
-            }
 
             const result = await User.findByIdAndUpdate(req.params.id, {
                 username: req.body.username,

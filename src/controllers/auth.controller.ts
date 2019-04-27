@@ -1,28 +1,24 @@
 // auth.controller
 
 import * as jwt from 'jsonwebtoken';
+import { body } from 'express-validator/check';
 import { Router, Request, Response } from 'express';
-import { body, validationResult } from 'express-validator/check';
+
 import { User } from '../models';
+import logger from '../utils/winstom.util';
+import { validateRequest } from '../utils/validator.util';
 
 const router = Router();
 
-router.post('/',
+router.post('/signIn',
     [
         body('email').not().isEmpty(),
         body('password').not().isEmpty(),
     ],
+    validateRequest,
     async (req: Request, res: Response) => {
 
         try {
-            
-            const errors = validationResult(req);
-
-            if (!errors.isEmpty()) {
-                return res.status(400).json({
-                    errors: errors.array()
-                });
-            }
 
             const {
                 email,
@@ -64,11 +60,41 @@ router.post('/',
             });
 
         } catch (error) {
-            console.log(error);
+            logger.error(error);
             res.status(500).json({
                 error
             });
 
+        }
+
+    });
+
+router.post('/signUp',
+    [
+        body('username').not().isEmpty(),
+        body('password').not().isEmpty(),
+        body('email').isEmail(),
+    ],
+    validateRequest,
+    async (req: Request, res: Response) => {
+
+        try {
+
+            const userModel = new User({
+                username: req.body.username,
+                password: req.body.password,
+                email: req.body.email
+            });
+
+            const user = await userModel.save();
+
+            res.json(user);
+
+        } catch (error) {
+            logger.error(error);
+            res.status(500).json({
+                error
+            });
         }
 
     });
