@@ -18,6 +18,7 @@ app.use(helmet());
 app.use(morgan);
 app.use(express.json());
 app.use(passport.initialize());
+app.use('/public', express.static('public'));
 
 // //constrollers
 app.use('/user', userController);
