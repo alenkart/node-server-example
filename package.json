@@ -34,7 +34,7 @@
     "@types/morgan": "^1.7.35",
     "@types/node": "^11.13.7",
     "@types/passport": "^1.0.0",
-    "@types/passport-jwt": "^1.0.0",
+    "@types/passport-jwt": "^3.0.1",
     "typescript": "^3.4.5"
   }
 }
