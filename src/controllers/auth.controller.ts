@@ -1,4 +1,4 @@
-//auth.controller.ts
+// auth.controller
 
 import * as jwt from 'jsonwebtoken';
 import { Router, Request, Response } from 'express';

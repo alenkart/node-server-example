@@ -1,4 +1,4 @@
-// passport.util.ts
+// passport.util
 
 import passport from 'passport';
 import passportJwt from './passport-jwt.util';

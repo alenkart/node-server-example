@@ -1,4 +1,4 @@
-// wistom.util.ts
+// wistom.util
 
 import { transports, createLogger, format } from 'winston';
 

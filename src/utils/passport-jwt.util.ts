@@ -1,5 +1,4 @@
-//passport-jwt.ulti.js
-'use strict';
+// passport-jwt.ulti
 
 import User from '../models/user.model';
 import { Strategy, ExtractJwt } from 'passport-jwt';
@@ -11,13 +10,11 @@ const optsJwt = {
     audience: process.env.JWT_AUDIENCE,
 };
 
-const strategyJwt = new Strategy(optsJwt, (payload, done) => {
+const strategyJwt = new Strategy(optsJwt, async (payload, done) => {
 
-    User.findById(payload.id, (err, user) => {
+    try {
 
-        if (err) {
-            return done(err, false);
-        }
+        const user = await User.findById(payload.id);
 
         if (user) {
             return done(null, user);
@@ -25,7 +22,10 @@ const strategyJwt = new Strategy(optsJwt, (payload, done) => {
             return done(null, false);
         }
 
-    });
+    } catch (error) {
+
+        done(error, false);
+    }
 
 });
 

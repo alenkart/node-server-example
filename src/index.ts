@@ -1,4 +1,4 @@
-//index.js
+// index
 
 import helmet from "helmet";
 import passport from 'passport';

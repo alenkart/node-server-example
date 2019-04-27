@@ -1,4 +1,4 @@
-// model/index.js
+// model/index
 
 import User from './user.model';
 

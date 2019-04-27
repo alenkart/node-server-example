@@ -1,4 +1,4 @@
-//user.model.ts
+// user.model
 
 import bcrypt from 'bcrypt';
 import { Schema, Document, model } from 'mongoose';

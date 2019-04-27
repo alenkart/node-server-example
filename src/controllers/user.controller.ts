@@ -1,5 +1,4 @@
-//user.controller.ts
-
+// user.controller
 
 import { Router, Request, Response } from 'express';
 import { body, validationResult, param } from 'express-validator/check';

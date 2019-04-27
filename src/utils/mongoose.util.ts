@@ -1,4 +1,4 @@
-//mongoose.util
+// mongoose.util
 
 import mongoose from 'mongoose';
 import logger from './winstom.util';
