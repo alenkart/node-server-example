@@ -6,7 +6,7 @@ import { Router, Request, Response } from 'express';
 
 import { User } from '../models';
 import logger from '../utils/winstom.util';
-import { validateRequest } from '../utils/validator.util';
+import { validateRequest, internalServerError } from '../utils/http.util';
 
 const router = Router();
 
@@ -60,11 +60,7 @@ router.post('/signIn',
             });
 
         } catch (error) {
-            logger.error(error);
-            res.status(500).json({
-                error
-            });
-
+            internalServerError(error);
         }
 
     });
@@ -91,10 +87,7 @@ router.post('/signUp',
             res.json(user);
 
         } catch (error) {
-            logger.error(error);
-            res.status(500).json({
-                error
-            });
+            internalServerError(error);
         }
 
     });

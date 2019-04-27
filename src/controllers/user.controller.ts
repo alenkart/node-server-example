@@ -6,21 +6,22 @@ import { body, validationResult, param } from 'express-validator/check';
 import { User } from '../models';
 import logger from '../utils/winstom.util';
 import passport from '../utils/passport.util';
-import { validateRequest } from '../utils/validator.util';
+import { validateRequest, internalServerError } from '../utils/http.util';
 
 const router = Router();
 
 router.get('/',
     async (req: Request, res: Response) => {
+
         try {
+
             const users = await User.find();
             res.json(users);
+
         } catch (error) {
-            logger.error(error);
-            res.status(500).json({
-                error
-            });
+            internalServerError(error);
         }
+
     });
 
 router.get('/:id',
@@ -31,8 +32,15 @@ router.get('/:id',
     passport.authenticate('jwt', { session: false }),
     async (req: Request, res: Response) => {
 
-        const users = await User.findById(req.params.id);
-        res.json(users);
+        try {
+
+            const users = await User.findById(req.params.id);
+            res.json(users);
+
+        } catch (error) {
+            internalServerError(error);
+        }
+
     });
 
 router.put('/:id',
@@ -50,27 +58,17 @@ router.put('/:id',
             res.json(result);
 
         } catch (error) {
-            logger.error(error);
-            res.status(500).json({
-                error
-            });
+            internalServerError(error);
         }
 
     });
 
 router.delete('/:id',
     [param('id').not().isEmpty()],
+    validateRequest,
     async (req: Request, res: Response) => {
 
         try {
-
-            const errors = validationResult(req);
-
-            if (!errors.isEmpty()) {
-                return res.status(422).json({
-                    errors: errors.array()
-                });
-            }
 
             const result = await User.deleteOne({
                 _id: req.params.id
@@ -79,10 +77,7 @@ router.delete('/:id',
             res.json(result);
 
         } catch (error) {
-            logger.error(error);
-            res.status(500).json({
-                errors: [error]
-            });
+            internalServerError(error);
         }
 
     });
