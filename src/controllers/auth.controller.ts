@@ -2,47 +2,35 @@
 
 import * as jwt from 'jsonwebtoken';
 import { body } from 'express-validator/check';
-import { Router, Request, Response } from 'express';
+import { Router, Request, Response, NextFunction } from 'express';
 
 import { User } from '../models';
-import logger from '../utils/winstom.util';
-import { validateRequest, internalServerError } from '../utils/http.util';
+import { validateRequest, ForbiddenError, BadRequesError, ServerError } from '../utils/http.util';
 
 const router = Router();
 
-router.post('/signIn',
+router.post('/signin',
     [
         body('email').not().isEmpty(),
         body('password').not().isEmpty(),
     ],
     validateRequest,
-    async (req: Request, res: Response) => {
+    async (req: Request, res: Response, next: NextFunction) => {
 
         try {
 
-            const {
-                email,
-                password
-            } = req.body;
+            const { email, password } = req.body;
 
-            const user = await User.findOne({
-                email
-            });
+            const user = await User.findOne({ email });
 
             if (!user) {
-                res.status(404).json({
-                    error: 'User not found'
-                });
-                return;
+                return next(new ForbiddenError({}));
             }
 
             const same = await user.comparePassword(password);
 
             if (!same) {
-                res.status(500).json({
-                    error: 'Unauthorized'
-                });
-                return;
+                return next(new ForbiddenError({}));
             }
 
             const payload = {
@@ -60,34 +48,39 @@ router.post('/signIn',
             });
 
         } catch (error) {
-            internalServerError(error);
+            next(new ServerError({ message: error.message }));
         }
 
     });
 
-router.post('/signUp',
+router.post('/signup',
     [
+        body('fullname').not().isEmpty(),
         body('username').not().isEmpty(),
         body('password').not().isEmpty(),
         body('email').isEmail(),
     ],
     validateRequest,
-    async (req: Request, res: Response) => {
+    async (req: Request, res: Response, next: NextFunction) => {
 
         try {
 
-            const userModel = new User({
-                username: req.body.username,
-                password: req.body.password,
-                email: req.body.email
-            });
+            const { fullname, username, password, email } = req.body;
 
-            const user = await userModel.save();
+            const user = await User.findOne({ username }, { email });
 
-            res.json(user);
+            if (!user) {
+                return next(new BadRequesError({}));
+            }
+
+            const userModel = new User({ fullname, username, password, email });
+
+            const newUser = await userModel.save();
+
+            res.json(newUser);
 
         } catch (error) {
-            internalServerError(error);
+            next(new ServerError({ message: error.message }));
         }
 
     });

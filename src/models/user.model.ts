@@ -4,6 +4,7 @@ import bcrypt from 'bcrypt';
 import mongoose, { Schema, Document } from 'mongoose';
 
 export interface IUser extends Document {
+    fullname: string;
     username: string;
     password: string;
     email: string;
@@ -11,7 +12,16 @@ export interface IUser extends Document {
     comparePassword(candidatePassword: string): Promise<Boolean>;
 }
 
+export enum UserRoles {
+    user = 0,
+    admin = 1,
+}
+
 const UserSchema: Schema = new Schema({
+    fullname: {
+        type: String,
+        required: true,
+    },
     username: {
         type: String,
         required: true,
@@ -31,6 +41,12 @@ const UserSchema: Schema = new Schema({
         type: Boolean,
         require: true,
         default: true,
+    },
+    role: {
+        type: Number,
+        enum: UserRoles,
+        default: UserRoles.user,
+        required: true,
     }
 });
 

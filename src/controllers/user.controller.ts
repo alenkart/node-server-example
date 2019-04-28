@@ -1,17 +1,16 @@
 // user.controller
 
-import { Router, Request, Response } from 'express';
+import { Router, Request, Response, NextFunction } from 'express';
 import { body, validationResult, param } from 'express-validator/check';
 
 import { User } from '../models';
-import logger from '../utils/winstom.util';
 import passport from '../utils/passport.util';
-import { validateRequest, internalServerError } from '../utils/http.util';
+import { validateRequest, BadRequesError, ServerError } from '../utils/http.util';
 
 const router = Router();
 
 router.get('/',
-    async (req: Request, res: Response) => {
+    async (req: Request, res: Response, next: NextFunction) => {
 
         try {
 
@@ -19,7 +18,7 @@ router.get('/',
             res.json(users);
 
         } catch (error) {
-            internalServerError(error);
+            next(new ServerError({ message: error.message }));
         }
 
     });
@@ -30,7 +29,7 @@ router.get('/:id',
     ],
     validateRequest,
     passport.authenticate('jwt', { session: false }),
-    async (req: Request, res: Response) => {
+    async (req: Request, res: Response, next: NextFunction) => {
 
         try {
 
@@ -38,7 +37,8 @@ router.get('/:id',
             res.json(users);
 
         } catch (error) {
-            internalServerError(error);
+            console.log(error.message);
+            next(new ServerError({ message: error.message }));
         }
 
     });
@@ -46,19 +46,20 @@ router.get('/:id',
 router.put('/:id',
     [param('id').not().isEmpty()],
     validateRequest,
-    async (req: Request, res: Response) => {
+    passport.authenticate('jwt', { session: false }),
+    async (req: Request, res: Response, next: NextFunction) => {
 
         try {
 
             const result = await User.findByIdAndUpdate(req.params.id, {
-                username: req.body.username,
+                fullname: req.body.fullname,
                 active: req.body.active,
             });
 
             res.json(result);
 
         } catch (error) {
-            internalServerError(error);
+            next(new ServerError({ message: error.message }));
         }
 
     });
@@ -66,7 +67,8 @@ router.put('/:id',
 router.delete('/:id',
     [param('id').not().isEmpty()],
     validateRequest,
-    async (req: Request, res: Response) => {
+    passport.authenticate('jwt', { session: false }),
+    async (req: Request, res: Response, next: NextFunction) => {
 
         try {
 
@@ -77,7 +79,7 @@ router.delete('/:id',
             res.json(result);
 
         } catch (error) {
-            internalServerError(error);
+            next(new ServerError({ message: error.message }));
         }
 
     });
