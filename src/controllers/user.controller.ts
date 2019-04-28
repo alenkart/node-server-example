@@ -1,7 +1,7 @@
 // user.controller
 
 import { Router, Request, Response, NextFunction } from 'express';
-import { body, validationResult, param } from 'express-validator/check';
+import { param } from 'express-validator/check';
 
 import { User } from '../models';
 import passport from '../utils/passport.util';

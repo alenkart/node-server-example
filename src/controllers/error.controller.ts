@@ -1,7 +1,7 @@
 import { Express, Request, Response, Router, NextFunction } from 'express';
 
 import logger from '../utils/winstom.util';
-import { ServerError, NotFoundError, HttpErrorCode } from '../utils/http.util';
+import { ServerError, NotFoundError } from '../utils/http.util';
 
 const router = Router();
 
