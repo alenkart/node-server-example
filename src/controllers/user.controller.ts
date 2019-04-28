@@ -5,7 +5,7 @@ import { param } from 'express-validator/check';
 
 import { User } from '../models';
 import passport from '../utils/passport.util';
-import { validateRequest, BadRequesError, ServerError } from '../utils/http.util';
+import { validateRequest, ServerError } from '../utils/http.util';
 
 const router = Router();
 
@@ -37,7 +37,6 @@ router.get('/:id',
             res.json(users);
 
         } catch (error) {
-            console.log(error.message);
             next(new ServerError({ message: error.message }));
         }
 
@@ -51,9 +50,11 @@ router.put('/:id',
 
         try {
 
+            const { fullname, active } = req.body;
+
             const result = await User.findByIdAndUpdate(req.params.id, {
-                fullname: req.body.fullname,
-                active: req.body.active,
+                fullname,
+                active,
             });
 
             res.json(result);

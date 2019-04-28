@@ -24,13 +24,13 @@ router.post('/signin',
             const user = await User.findOne({ email });
 
             if (!user) {
-                return next(new ForbiddenError({}));
+                return next(new ForbiddenError());
             }
 
             const same = await user.comparePassword(password);
 
             if (!same) {
-                return next(new ForbiddenError({}));
+                return next(new ForbiddenError());
             }
 
             const payload = {
@@ -70,7 +70,7 @@ router.post('/signup',
             const user = await User.findOne({ username }, { email });
 
             if (!user) {
-                return next(new BadRequesError({}));
+                return next(new BadRequesError());
             }
 
             const userModel = new User({ fullname, username, password, email });

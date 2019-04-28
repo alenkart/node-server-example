@@ -32,7 +32,7 @@ export class ServerError extends Error {
         message = "Internal Server Error",
         code = HttpErrorCode.internalServerError,
         status = 500
-    }) {
+    } = {}) {
         super();
         this.code = code;
         this.status = status;
@@ -45,7 +45,7 @@ export class BadRequesError extends ServerError {
         code = HttpErrorCode.badRequest,
         status = 400,
         message = "Bad Request"
-    }) {
+    } = {}) {
         super({ message, code, status });
     }
 }
@@ -55,7 +55,7 @@ export class NotFoundError extends ServerError {
         code = HttpErrorCode.notFound,
         status = 404,
         message = "Not Found"
-    }) {
+    } = {}) {
         super({ message, code, status });
     }
 }
@@ -65,7 +65,7 @@ export class ForbiddenError extends ServerError {
         code = HttpErrorCode.userNotFound,
         status = 403,
         message = "Forbidden"
-    }) {
+    } = {}) {
         super({ message, code, status });
     }
 }

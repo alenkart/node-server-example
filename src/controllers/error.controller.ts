@@ -9,7 +9,7 @@ export default (app: Express) => {
 
     app.use((req: Request, res: Response, next: NextFunction) => {
 
-        const serverError = new NotFoundError({});
+        const serverError = new NotFoundError();
 
         res.status(serverError.status).json(serverError);
     });
@@ -19,7 +19,7 @@ export default (app: Express) => {
 
         logger.error(error);
 
-        const serverError = new ServerError({});
+        const serverError = new ServerError();
 
         if (error.code) {
             serverError.code = error.code;
