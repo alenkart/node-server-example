@@ -1,7 +1,7 @@
-// morgan.util
+// morgan.config
 
 import morgan, { Options } from "morgan";
-import logger from './winstom.util';
+import logger from './winstom.config';
 
 const morganOption: Options = {
     stream: {

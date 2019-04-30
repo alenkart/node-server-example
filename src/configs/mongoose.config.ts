@@ -1,7 +1,7 @@
-// mongoose.util
+// mongoose.config
 
 import mongoose from 'mongoose';
-import logger from './winstom.util';
+import logger from './winstom.config';
 
 const config = {
     useNewUrlParser: true,

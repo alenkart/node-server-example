@@ -4,10 +4,10 @@ import helmet from "helmet";
 import passport from 'passport';
 import express from "express";
 
-import './utils/dotenv.util';
-import './utils/mongoose.util';
-import logger from './utils/winstom.util';
-import morgan from './utils/morgan.util';
+import './configs/dotenv.config';
+import './configs/mongoose.config';
+import logger from './configs/winstom.config';
+import morgan from './configs/morgan.config';
 import { userController, authController, errorHandler } from './controllers';
 
 const app = express();
