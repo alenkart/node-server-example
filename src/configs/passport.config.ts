@@ -1,7 +1,7 @@
-// passport.util
+// passport.config
 
 import passport from 'passport';
-import passportJwt from './passport-jwt.util';
+import passportJwt from './passport-jwt.config';
 
 passport.use(passportJwt);
 

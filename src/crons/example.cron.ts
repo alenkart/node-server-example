@@ -1,7 +1,7 @@
 // example.cron
 
 import mongoose from 'mongoose';
-import logger from '../utils/winstom.util';
+import logger from '../configs/winstom.config';
 
 (async () => {
 

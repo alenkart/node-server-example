@@ -1,4 +1,4 @@
-// passport-jwt.ulti
+// passport-jwt.config
 
 import { User } from '../models';
 import { Strategy, ExtractJwt } from 'passport-jwt';

@@ -4,7 +4,7 @@ import { Router, Request, Response, NextFunction } from 'express';
 import { param } from 'express-validator/check';
 
 import { User } from '../models';
-import passport from '../utils/passport.util';
+import passport from '../configs/passport.config';
 import { validateRequest, ServerError } from '../utils/http.util';
 
 const router = Router();
