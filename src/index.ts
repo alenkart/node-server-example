@@ -2,7 +2,7 @@
 
 import helmet from "helmet";
 import passport from 'passport';
-import express from "express";
+import express, { Router } from "express";
 
 import './configs/dotenv.config';
 import './configs/mongoose.config';
@@ -20,10 +20,16 @@ app.use(passport.initialize());
 app.use('/public', express.static('public'));
 
 // //constrollers
-app.use('/user', userController);
-app.use('/auth', authController);
+const router = Router();
+router.use('/user', userController);
+router.use('/auth', authController);
+app.use(`/${process.env.API_VERSION}`, router);
 errorHandler(app);
 
 app.listen(process.env.PORT, () => {
-    logger.info(`Server is running at port: ${process.env.PORT}, environment: ${process.env.NODE_ENV}`);
+    logger.info(`================================================`);
+    logger.info(`Server is running...`);
+    logger.info(`Environment: ${process.env.NODE_ENV}`);
+    logger.info(`Port: ${process.env.PORT}`);
+    logger.info(`Api Version: ${process.env.API_VERSION}`);
 });
