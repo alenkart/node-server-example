@@ -23,7 +23,7 @@ router.post('/signin',
 
             const user = await User.findOne({ email });
 
-            if (!user) {
+            if (!!user) {
                 return next(new ForbiddenError());
             }
 
@@ -69,7 +69,7 @@ router.post('/signup',
 
             const user = await User.findOne({ username }, { email });
 
-            if (!user) {
+            if (!!user) {
                 return next(new BadRequesError());
             }
 
